@@ -1,0 +1,116 @@
+This is a sample project that is used to demonstrate how to create a
+shared library in Haskell that can be called from other programs.
+E.g: python using ctypes, or C using dlopen.
+
+At this point it doesn't work, so hopefully others can contribute to
+make it work!
+
+
+Tests:
+
+1) ??
+
+Build method #1:
+
+  [1 of 1] Compiling Test             ( Test.hs, Test.o )
+  Linking Test.so ...
+  Undefined symbols:
+    "_environ", referenced from:
+        ___hscore_environ in libHSbase-4.3.1.0.a(PrelIOUtils.o)
+       (maybe you meant: ___hscore_environ)
+  ld: symbol(s) not found
+  collect2: ld returned 1 exit status
+
+Build method #2:
+
+Implicit import declaration:
+    Could not find module `Prelude':
+      Perhaps you haven't installed the "dyn" libraries for package `base'?
+      Use -v to see a list of the files searched for.
+
+Build method #3:
+
+Implicit import declaration:
+    Could not find module `Prelude':
+      Perhaps you haven't installed the "dyn" libraries for package `base'?
+      Use -v to see a list of the files searched for.
+
+Build method #4:
+
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking libTest.so ...
+ld: pointer in read-only segment not allowed in slidable image, used in ___gmpn_modexact_1c_odd from /usr/local/lib/ghc-7.0.4/integer-gmp-0.2.0.3/libHSinteger-gmp-0.2.0.3.a(mode1o.o)
+collect2: ld returned 1 exit status
+
+Build method #5:
+
+Implicit import declaration:
+    Could not find module `Prelude':
+      Perhaps you haven't installed the "dyn" libraries for package `base'?
+      Use -v to see a list of the files searched for.
+
+Build method #6:
+
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking libTest.so ...
+ld: pointer in read-only segment not allowed in slidable image, used in ___gmpn_modexact_1c_odd from /usr/local/lib/ghc-7.0.4/integer-gmp-0.2.0.3/libHSinteger-gmp-0.2.0.3.a(mode1o.o)
+collect2: ld returned 1 exit status
+
+1) OS X Snow Leopard GHC 7.0.4 from Haskell Platform 2011.4.0.0 32 bit 
+
+Build method #1:
+
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking Test.so ...
+Undefined symbols:
+  "_environ", referenced from:
+      _environ$non_lazy_ptr in libHSbase-4.3.1.0.a(PrelIOUtils.o)
+     (maybe you meant: ___hscore_environ, _environ$non_lazy_ptr )
+ld: symbol(s) not found
+collect2: ld returned 1 exit status
+
+Build method #2:
+
+benno@ff:~/haskell-shared-example% sh build-test.sh 2 
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking Test.so ...
+ld: unknown option: -optc
+collect2: ld returned 1 exit status
+
+Build method #3:
+
+benno@ff:~/haskell-shared-example% sh build-test.sh 3
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking libTest.so ...
+
+Success! in linking:
+
+But, load time error:
+
+Library not loaded: /usr/local/lib/ghc-7.0.4/base-4.3.1.0/libHSbase-4.3.1.0-ghc7.0.4.dylib
+
+Build method #4:
+
+Success in linking, but loading error:
+
+OSError: dlopen(./libTest.so, 6): Symbol not found: _alloc_blocks_lim
+  Referenced from: /Volumes/BigDisk/Users/benno/haskell-shared-example/libTest.so
+  Expected in: flat namespace
+
+Build method #5:
+
+Success in linking, but loading error:
+
+OSError: dlopen(./libTest.so, 6): Library not loaded: /usr/local/lib/ghc-7.0.4/base-4.3.1.0/libHSbase-4.3.1.0-ghc7.0.4.dylib
+  Referenced from: /Volumes/BigDisk/Users/benno/haskell-shared-example/libTest.so
+  Reason: image not found
+
+Build method #6:
+
+benno@ff:~/haskell-shared-example% sh build-test.sh 6                    
+[1 of 1] Compiling Test             ( Test.hs, Test.o )
+Linking libTest.so ...
+benno@ff:~/haskell-shared-example% arch -i386 /usr/bin/python2.6  test.py
+<CDLL './libTest.so', handle 20a570 at 1f0090>
+<_FuncPtr object at 0x1d3af8>
+
