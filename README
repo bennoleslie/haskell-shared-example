@@ -2,13 +2,11 @@ This is a sample project that is used to demonstrate how to create a
 shared library in Haskell that can be called from other programs.
 E.g: python using ctypes, or C using dlopen.
 
-At this point it doesn't work, so hopefully others can contribute to
-make it work!
-
+At this point only 32-bit version works (in one of the 6 different attempted configurations.)
 
 Tests:
 
-1) ??
+1) OS X Snow Leopard GHC 7.0.4 from Haskell Platform 2011.4.0.0 64 bit 
 
 Build method #1:
 
@@ -56,7 +54,7 @@ Linking libTest.so ...
 ld: pointer in read-only segment not allowed in slidable image, used in ___gmpn_modexact_1c_odd from /usr/local/lib/ghc-7.0.4/integer-gmp-0.2.0.3/libHSinteger-gmp-0.2.0.3.a(mode1o.o)
 collect2: ld returned 1 exit status
 
-1) OS X Snow Leopard GHC 7.0.4 from Haskell Platform 2011.4.0.0 32 bit 
+2) OS X Snow Leopard GHC 7.0.4 from Haskell Platform 2011.4.0.0 32 bit 
 
 Build method #1:
 
