@@ -4,6 +4,7 @@
 module Test where
 
 import Foreign.C.Types
+import Foreign.C.String
 import Foreign.StablePtr
 import Foreign.Storable
 import Foreign.Marshal.Alloc
@@ -88,5 +89,33 @@ gethslist = do
   pokeArray p e10
   return p
 
+printlist :: (Ptr ExampleStruct) -> IO ()
+printlist lst_e = do
+  es <- peekArray 10 lst_e
+  putStr "Blah: "
+  putStr $ show es
+  putStr "\n"
+
+
 foreign export ccall
     gethslist :: IO (Ptr ExampleStruct)
+
+foreign export ccall
+    printlist :: (Ptr ExampleStruct) -> IO ()
+
+
+-- Some string handling
+hsstrlen :: CString -> IO CInt
+hsstrlen str = do
+  s <- peekCString str
+  return $ fromIntegral $ length s
+
+gethsstr :: IO CString
+gethsstr = do
+  newCString "hello world"
+
+foreign export ccall
+    hsstrlen :: CString -> IO CInt
+
+foreign export ccall
+    gethsstr :: IO CString
