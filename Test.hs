@@ -119,3 +119,19 @@ foreign export ccall
 
 foreign export ccall
     gethsstr :: IO CString
+
+-- Something more substrantional
+
+wc :: String -> IO Int
+wc file = do
+  contents <- readFile file
+  return $ length $ words $ contents
+
+export_wc :: CString -> IO CInt
+export_wc file = do
+  _file <- peekCString file
+  _count <- wc _file
+  return $ fromIntegral $ _count
+
+foreign export ccall
+        export_wc ::CString -> IO CInt

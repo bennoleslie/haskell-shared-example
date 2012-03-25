@@ -37,3 +37,5 @@ assert lib.hsstrlen("Test!") == 5
 
 lib.gethsstr.restype = c_char_p
 assert lib.gethsstr() == "hello world"
+
+print lib.export_wc("Test.hs")
