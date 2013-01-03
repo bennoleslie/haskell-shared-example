@@ -11,7 +11,7 @@ import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
 import Foreign.Ptr
 
--- Very simple haskel function 
+-- Very simple haskell function
 hsfun :: CInt -> IO CInt
 hsfun x = do
     putStrLn "Hello World"

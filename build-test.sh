@@ -15,13 +15,13 @@ case $1 in
 # From: http://weblog.haskell.cz/pivnik/building-a-shared-library-in-haskell/
 1) ghc -O2 --make \
     -no-hs-main -optl '-shared' -optc '-DMODULE=Test' \
-    -o Test.so Test.hs module_init.c
+    -o libTest.so Test.hs module_init.c
 ;;
 
 # Alternative to #1 with -dynamic
 2) ghc -O2 --make \
     -no-hs-main -optl '-shared' -optl '-dynamic' -optc '-DMODULE=Test' \
-    -o Test.so Test.hs module_init.c
+    -o libTest.so Test.hs module_init.c
 ;;
 
 # From: http://stackoverflow.com/questions/5131182/how-to-compile-haskell-to-a-static-library
